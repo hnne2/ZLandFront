@@ -1,0 +1,50 @@
+@use './variables' as *;
+
+html {
+  height: 100%;
+  line-height: normal;
+}
+
+body {
+  height: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  // -webkit-font-smoothing: antialiased;
+  // -moz-osx-font-smoothing: grayscale;
+  font-weight: normal;
+  background-color: $color-neutral-100;
+  color: $color-black;
+  &.theme-dark {
+    background-color: $color-black;
+    color: #fff;
+  }
+}
+
+#__nuxt {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
+
+main {
+  flex: 1 1 auto;
+}
+
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  margin: -1px;
+  clip: rect(0 0 0 0);
+  clip-path: inset(100%);
+  white-space: nowrap;
+}
+
+.container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 740px;
+  padding: 0 16px;
+}
