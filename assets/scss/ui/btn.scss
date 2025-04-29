@@ -1,0 +1,83 @@
+@use './../general/variables.scss' as *;
+
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 14px 24px;
+	border-radius: 12px;
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 125%;
+	text-align: center;
+	transition: all 0.3s ease 0s;
+	&--light {
+		background-color: #fff;
+		color: $color-black;
+		@media (hover: hover) {
+			&:hover {
+				background-color: $color-neutral-200;
+			}
+		}
+		&:active {
+			background-color: $color-neutral-200;
+		}
+		&:disabled {
+			background-color: $color-neutral-600;
+			color: $color-neutral-400;
+			cursor: default;
+		}
+	}
+	&--dark {
+		background-color: $color-neutral-800;
+		color: #fff;
+		@media (hover: hover) {
+			&:hover {
+				background-color: $color-neutral-600;
+			}
+		}
+		&:active {
+			background-color: $color-neutral-600;
+		}
+		&:disabled {
+			background-color: $color-neutral-200;
+			color: $color-neutral-300;
+			cursor: default;
+		}
+	}
+	svg {
+		flex-shrink: 0;
+		width: 20px;
+		height: 20px;
+		transition: all 0.3s ease 0s;
+	}
+}
+
+.btn-text {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	font-weight: 600;
+	font-size: 16px;
+	line-height: 125%;
+	transition: all 0.3s ease 0s;
+	@media (hover: hover) {
+		&:hover {
+			color: $color-neutral-500;
+		}
+	}
+	&:active {
+		color: $color-neutral-500;
+	}
+	&:disabled {
+		color: $color-neutral-300;
+	}
+	svg {
+		flex-shrink: 0;
+		width: 20px;
+		height: 20px;
+		transition: all 0.3s ease 0s;
+	}
+}

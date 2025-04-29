@@ -1,0 +1,20 @@
+{
+	"header": {
+		"navigations": [
+			{
+				"id": 1,
+				"link": {
+					"label": "Home",
+					"to": "/"
+				}
+			},
+			{
+				"id": 2,
+				"link": {
+					"label": "About",
+					"to": "/about/"
+				}
+			}
+		]
+	}
+}

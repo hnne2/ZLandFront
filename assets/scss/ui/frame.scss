@@ -1,0 +1,6 @@
+@use './../general/variables.scss' as *;
+
+.frame {
+  background-color: $color-neutral-700;
+  border-radius: 32px;
+}
