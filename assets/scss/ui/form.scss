@@ -29,6 +29,9 @@
     color: $color-neutral-400;
     transition: all 0.3s ease 0s;
     z-index: 0;
+    span {
+      color: $color-red;
+    }
     .input.disabled & {
       color: $color-neutral-500;
     }
