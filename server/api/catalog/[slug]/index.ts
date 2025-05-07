@@ -1,8 +1,7 @@
 import data from '~/mocke/catalog/[slug]/index.json'
 
-export default defineEventHandler(async (event) => {
-  const slug = getRouterParam(event, 'slug')
-  console.log('slug > ', slug)
+export default defineEventHandler(async (_event) => {
+  // const slug = getRouterParam(event, 'slug')
   // const config = useRuntimeConfig()
 
   try {
