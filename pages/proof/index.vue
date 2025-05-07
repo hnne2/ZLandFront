@@ -1,12 +1,19 @@
 <script lang="ts" setup>
-import { vMaska } from 'maska/vue'
+import {vMaska} from 'maska/vue'
 import * as Yup from 'yup'
+
+const { data, error } = await useFetch<any>('/api/proof/')
+
+if (error.value) {
+  throw createError({
+    statusCode: error.value.statusCode,
+    statusMessage: error.value.statusMessage,
+    fatal: true,
+  })
+}
 
 definePageMeta({
   layout: 'dark',
-})
-useHead({
-  title: 'Подтверждение возраста',
 })
 
 interface FormData {
@@ -81,14 +88,21 @@ const schema = Yup.object().shape({
 
 const isLoading = ref<boolean>(false)
 
-const handleSubmit = (values: any) => {
+const handleSubmit = () => {
   isLoading.value = true
-  console.log('Значения формы:', values)
+  const adult = useCookie<string>('adult')
+  adult.value = 'adult'
+  setTimeout(() => {
+    navigateTo('/')
+  }, 1000)
 }
 </script>
 
 <template>
   <section class="proof">
+    <h1 class="visually-hidden">
+      {{ data.seo.H1 }}
+    </h1>
     <div class="container">
       <div class="proof__frame frame">
         <div class="proof__head">
@@ -97,7 +111,7 @@ const handleSubmit = (values: any) => {
         </div>
         <div class="proof__form">
           <div class="proof__form-info">
-            <p class="proof__description p1-medium">
+            <p class="proof__description typo-p1-medium">
               Я подтверждаю, что мне исполнилось 18 или более лет, и я являюсь
               потребителем табака или иной содержащей никотин продукции
             </p>
@@ -113,7 +127,6 @@ const handleSubmit = (values: any) => {
               v-slot="{ field, meta, errorMessage }"
               v-model="form.date"
               name="date"
-              validate-on-input
             >
               <div class="input">
                 <div class="input__inner">
@@ -123,7 +136,7 @@ const handleSubmit = (values: any) => {
                     :disabled="isLoading"
                     type="tel"
                     name="date"
-                    placeholder=""
+                    placeholder="Дата рождения"
                     :class="{
                       error: meta.validated && !meta.valid,
                     }"
@@ -144,7 +157,7 @@ const handleSubmit = (values: any) => {
             </button>
           </Form>
         </div>
-        <p class="proof__footer p3-medium">
+        <p class="proof__footer typo-p3-medium">
           Этот сайт содержит информацию о бездымных продуктах, предназначенных
           только для лиц старше 18 лет
         </p>
@@ -154,9 +167,6 @@ const handleSubmit = (values: any) => {
 </template>
 
 <style lang="scss" scoped>
-@use '../../assets/scss/abstracts/mixins' as *;
-@use '../../assets/scss/general/variables' as *;
-
 .proof {
   padding: val(16, 80) 0;
   height: 100dvh;
@@ -202,9 +212,6 @@ const handleSubmit = (values: any) => {
     display: flex;
     flex-direction: column;
     gap: 32px;
-  }
-
-  &__form-info {
   }
 
   &__description {

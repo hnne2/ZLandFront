@@ -1,0 +1,17 @@
+{
+  "seo": {
+    "meta": {
+      "title": "Подтвердите возраст",
+      "ogTitle": "Подтвердите возраст",
+      "description": "Это описание для страницы Подтвердите возраст",
+      "ogDescription": "Это описание для страницы Подтвердите возраст",
+      "ogImage": "/images/zland.jpg",
+      "twitterCard": "summary_large_image",
+      "robots": "noindex"
+    },
+    "H1": "Страница подтверждения возраста",
+    "content": null
+  },
+
+  "schemaOrg": []
+}

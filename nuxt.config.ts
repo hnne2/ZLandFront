@@ -3,21 +3,65 @@ import checker from 'vite-plugin-checker'
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: false },
+
   devServer: {
     port: 3000,
     host: '0.0.0.0',
   },
-  modules: ['@nuxt/eslint', '@pinia/nuxt', '@vee-validate/nuxt', 'nuxt-icons'],
-  css: ['~/assets/css/main.css', '~/assets/scss/main.scss'],
+
+  app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
+    head: {
+      charset: 'utf-8',
+      viewport: 'width=device-width, minimum-scale=1, maximum-scale=1',
+      htmlAttrs: {
+        lang: 'ru',
+      },
+      meta: [{ name: 'apple-mobile-web-app-title', content: 'Zland' }],
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/svg+xml',
+          href: '/favicon.svg',
+        },
+        {
+          rel: 'shortcut icon',
+          type: 'image/x-icon',
+          href: '/favicon.ico',
+        },
+        {
+          rel: 'icon',
+          type: 'image/png',
+          sizes: '96x96',
+          href: '/favicon-96x96.png',
+        },
+        {
+          rel: 'apple-touch-icon',
+          sizes: '180x180',
+          href: '/apple-touch-icon.png',
+        },
+        {
+          rel: 'manifest',
+          href: '/site.webmanifest',
+        },
+      ],
+    },
+  },
+
+  modules: [
+    '@nuxt/eslint',
+    '@pinia/nuxt',
+    '@vee-validate/nuxt',
+    'nuxt-icons',
+    '@hypernym/nuxt-gsap',
+  ],
+  css: ['~/assets/scss/main.scss'],
   vite: {
     plugins: [
       checker({
         eslint: {
           useFlatConfig: true,
           lintCommand: 'eslint "**/*.{js,ts,vue}"',
-        },
-        stylelint: {
-          lintCommand: 'stylelint "**/*.{css,scss,vue}"',
         },
       }),
     ],

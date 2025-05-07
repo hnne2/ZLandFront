@@ -1,6 +1,6 @@
 import { setLocale } from 'yup'
 
-export default defineNuxtPlugin((nuxtApp) => {
+export default defineNuxtPlugin((_nuxtApp) => {
   setLocale({
     mixed: {
       default: 'Поле неверно заполнено',

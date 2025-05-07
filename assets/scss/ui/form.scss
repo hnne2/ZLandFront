@@ -27,7 +27,7 @@
     font-size: 18px;
     line-height: 135%;
     color: $color-neutral-400;
-    transition: all 0.3s ease 0s;
+    transition: all 0.2s ease 0s;
     z-index: 0;
     span {
       color: $color-red;
@@ -47,6 +47,7 @@ textarea {
 }
 input,
 textarea {
+  display: block;
   color: #fff;
   position: relative;
   width: 100%;
@@ -57,9 +58,9 @@ textarea {
   background-color: transparent;
   border: 2px solid $color-neutral-600;
   z-index: 2;
-  transition: all 0.3s ease 0s;
+  transition: all 0.2s ease 0s;
   &::placeholder {
-    color: transparent;
+    opacity: 0;
   }
   &:focus {
     border: 2px solid #fff;

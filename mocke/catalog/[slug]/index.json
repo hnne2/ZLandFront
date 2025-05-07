@@ -1,0 +1,104 @@
+{
+  "seo": {
+    "meta": {
+      "title": "Фрукты",
+      "ogTitle": "Фрукты",
+      "description": "Это описание для страницы фруктовых вкусов",
+      "ogDescription": "Это описание для страницы фруктовых вкусов",
+      "ogImage": "/images/zland.jpg",
+      "twitterCard": "summary_large_image",
+      "robots": "noindex"
+    },
+    "H1": "Фрукты",
+    "content": null
+  },
+
+  "schemaOrg": [],
+  "specification": "<ul><li>До 900 затяжек;</li><li>35 вкусов: 1.9% солевой никотин;</li><li>Объем бака 2 мл;</li><li>Подходят для устройства Zland Mini;</li><li>Регулируемая мощность;</li><li>Двойная сетчатая спираль</li></ul>",
+  "products": [
+    {
+      "id": 1,
+      "label": "Грейпфрут",
+      "image": {
+        "url": "/images/catalog/fruits/fruits-1.png",
+        "alt": "Грейпфрут"
+      },
+      "isTop": true,
+      "parameters": [
+        { "id": 1, "label": "Сладость", "value": 1 },
+        { "id": 2, "label": "Кислинка", "value": 2 },
+        { "id": 3, "label": "Холодок", "value": 0 }
+      ]
+    },
+    {
+      "id": 2,
+      "label": "Виноград",
+      "image": {
+        "url": "/images/catalog/fruits/fruits-2.png",
+        "alt": "Виноград"
+      },
+      "isTop": true,
+      "parameters": [
+        { "id": 1, "label": "Сладость", "value": 2 },
+        { "id": 2, "label": "Кислинка", "value": 1 },
+        { "id": 3, "label": "Холодок", "value": 0.5 }
+      ]
+    },
+    {
+      "id": 3,
+      "label": "Гуава",
+      "image": {
+        "url": "/images/catalog/fruits/fruits-3.png",
+        "alt": "Гуава"
+      },
+      "isTop": false,
+      "parameters": [
+        { "id": 1, "label": "Сладость", "value": 2.5 },
+        { "id": 2, "label": "Кислинка", "value": 0.5 },
+        { "id": 3, "label": "Холодок", "value": 1 }
+      ]
+    },
+    {
+      "id": 4,
+      "label": "Манго",
+      "image": {
+        "url": "/images/catalog/fruits/fruits-4.png",
+        "alt": "Манго"
+      },
+      "isTop": true,
+      "parameters": [
+        { "id": 1, "label": "Сладость", "value": 3 },
+        { "id": 2, "label": "Кислинка", "value": 1 },
+        { "id": 3, "label": "Холодок", "value": 0 }
+      ]
+    },
+    {
+      "id": 5,
+      "label": "Киви",
+      "image": {
+        "url": "/images/catalog/fruits/fruits-5.png",
+        "alt": "Киви"
+      },
+      "isTop": true,
+      "parameters": [
+        { "id": 1, "label": "Сладость", "value": 1.5 },
+        { "id": 2, "label": "Кислинка", "value": 2.5 },
+        { "id": 3, "label": "Холодок", "value": 1 }
+      ]
+    },
+    {
+      "id": 6,
+      "label": "Дыня",
+      "image": {
+        "url": "/images/catalog/fruits/fruits-6.png",
+        "alt": "Дыня"
+      },
+      "isTop": true,
+      "parameters": [
+        { "id": 1, "label": "Сладость", "value": 3 },
+        { "id": 2, "label": "Кислинка", "value": 0 },
+        { "id": 3, "label": "Холодок", "value": 0.5 }
+      ]
+    }
+  ]
+}

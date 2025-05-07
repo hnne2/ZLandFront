@@ -1,0 +1,39 @@
+{
+  "seo": {
+    "meta": {
+      "title": "Zland",
+      "ogTitle": "Zland",
+      "description": "Это описание для страницы Zland",
+      "ogDescription": "Это описание для страницы Zland",
+      "ogImage": "/images/zland.jpg",
+      "twitterCard": "summary_large_image",
+      "robots": "noindex"
+    },
+    "H1": "Zland",
+    "content": null
+  },
+
+  "schemaOrg": [],
+  "nav": [
+    {
+      "id": 1,
+      "label": "Каталог вкусов",
+      "to": "/catalog/"
+    },
+    {
+      "id": 2,
+      "label": "О продукте",
+      "to": "/about/"
+    },
+    {
+      "id": 3,
+      "label": "Розыгрышы призов",
+      "to": "/spinner/"
+    },
+    {
+      "id": 4,
+      "label": "Партнерство",
+      "to": "/partner/"
+    }
+  ]
+}

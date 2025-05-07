@@ -1,56 +1,54 @@
 {
-	"name": "nuxt-start-boilerplate",
-	"private": true,
-	"type": "module",
-	"scripts": {
-		"prebuild": "cross-env NODE_ENV=production npm run lint",
-		"dev": "cross-env NODE_ENV=development nuxt dev",
-		"build": "cross-env NODE_ENV=production nuxt build",
-		"generate": "nuxt generate",
-		"preview": "nuxt preview",
-		"postinstall": "nuxt prepare",
-		"lint:script": "eslint .",
-		"lint:style": "stylelint '**/*.{css,scss,vue}'",
-		"lint": "eslint . && stylelint '**/*.{css,scss,vue}'",
-		"format": "prettier --write .",
-		"prepare": "husky install"
-	},
-	"dependencies": {
-		"@pinia/nuxt": "^0.9.0",
-		"@vee-validate/nuxt": "^4.15.0",
-		"normalize.css": "^8.0.1",
-		"nuxt": "^3.17.0",
-		"vue": "latest",
-		"vue-router": "latest",
-		"yup": "^1.6.1"
-	},
-	"devDependencies": {
-		"@hypernym/nuxt-gsap": "^2.4.3",
-		"@nuxt/eslint": "^1.0.1",
-		"@nuxt/eslint-config": "^1.0.1",
-		"cross-env": "^7.0.3",
-		"eslint": "^9.25.1",
-		"eslint-config-prettier": "^10.1.2",
-		"eslint-plugin-prettier": "^5.2.6",
-		"husky": "^8.0.3",
-		"lint-staged": "^15.5.1",
-		"maska": "^3.1.1",
-		"nuxt-icons": "^3.2.1",
-		"postcss-html": "^1.8.0",
-		"prettier": "^3.5.3",
-		"sass": "^1.87.0",
-		"stylelint": "^16.19.1",
-		"stylelint-config-standard-scss": "^14.0.0",
-		"stylelint-prettier": "^5.0.3",
-		"typescript": "^5.8.3",
-		"vite-plugin-checker": "^0.9.1"
-	},
-	"lint-staged": {
-		"*.{js,ts,vue}": [
-			"npm run lint:script"
-		],
-		"*.{css,scss,vue}": [
-			"npm run lint:style"
-		]
-	}
+  "name": "zland",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prebuild": "cross-env NODE_ENV=production npm run lint",
+    "dev": "cross-env NODE_ENV=development nuxt dev",
+    "build": "cross-env NODE_ENV=production nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint:script": "eslint .",
+    "lint:style": "stylelint '**/*.{css,scss,vue}'",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.9.0",
+    "@vee-validate/nuxt": "^4.15.0",
+    "motion-v": "^1.0.1",
+    "normalize.css": "^8.0.1",
+    "nuxt": "^3.17.0",
+    "vue": "latest",
+    "vue-router": "latest",
+    "yup": "^1.6.1"
+  },
+  "devDependencies": {
+    "@hypernym/nuxt-gsap": "^2.4.3",
+    "@nuxt/eslint": "^1.0.1",
+    "@nuxt/eslint-config": "^1.0.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.25.1",
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-prettier": "^5.2.6",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.5.1",
+    "maska": "^3.1.1",
+    "nuxt-icons": "^3.2.1",
+    "postcss-html": "^1.8.0",
+    "prettier": "^3.5.3",
+    "sass": "^1.87.0",
+    "stylelint": "^16.19.1",
+    "stylelint-config-standard-scss": "^14.0.0",
+    "stylelint-prettier": "^5.0.3",
+    "typescript": "^5.8.3",
+    "vite-plugin-checker": "^0.9.1"
+  },
+  "lint-staged": {
+    "*.{js,ts,vue}": [
+      "npm run lint:script"
+    ]
+  }
 }

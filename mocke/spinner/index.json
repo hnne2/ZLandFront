@@ -1,0 +1,33 @@
+{
+  "seo": {
+    "meta": {
+      "title": "Розыгрыш призов",
+      "ogTitle": "Розыгрыш призов",
+      "description": "Это описание для страницы Розыгрыш призов",
+      "ogDescription": "Это описание для страницы Розыгрыш призов",
+      "ogImage": "/images/zland.jpg",
+      "twitterCard": "summary_large_image",
+      "robots": "noindex"
+    },
+    "H1": "Розыгрыш призов",
+    "content": null
+  },
+
+  "schemaOrg": [],
+  "spinner": {
+    "chanceToWin": 0.5,
+    "maxSpins": 20
+  },
+  "prize": {
+    "title": "Playstation 5",
+    "image": {
+      "url": "/images/spinner/prizes/prize-1.png",
+      "alt": "Playstation 5"
+    },
+    "message": "Поздравляем с выигрышем! Наш менеджер свяжется с вами, чтобы уточнить детали доставки"
+  },
+  "theEnd": {
+    "title": "Розыгрыш завершился",
+    "description": "Все призы уже разыграны. Следующий розыгрыш не за горами — не упусти шанс снова испытать удачу"
+  }
+}

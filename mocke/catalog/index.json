@@ -1,0 +1,85 @@
+{
+  "seo": {
+    "meta": {
+      "title": "Категории вкусов",
+      "ogTitle": "Категории вкусов",
+      "description": "Это описание для страницы Категории вкусов",
+      "ogDescription": "Это описание для страницы Категории вкусов",
+      "ogImage": "/images/zland.jpg",
+      "twitterCard": "summary_large_image",
+      "robots": "noindex"
+    },
+    "H1": "Категории вкусов",
+    "content": null
+  },
+
+  "schemaOrg": [],
+  "categories": [
+    {
+      "id": 1,
+      "link": {
+        "label": "Фрукты",
+        "to": "fruits"
+      },
+      "icon": {
+        "url": "/images/categories/icon-fruits.png",
+        "alt": "Фрукты"
+      }
+    },
+    {
+      "id": 2,
+      "link": {
+        "label": "Десерты",
+        "to": "desserts"
+      },
+      "icon": {
+        "url": "/images/categories/icon-desserts.png",
+        "alt": "Десерты"
+      }
+    },
+    {
+      "id": 3,
+      "link": {
+        "label": "Классика",
+        "to": "classic"
+      },
+      "icon": {
+        "url": "/images/categories/icon-classic.png",
+        "alt": "Классика"
+      }
+    },
+    {
+      "id": 4,
+      "link": {
+        "label": "Напитки",
+        "to": "drinks"
+      },
+      "icon": {
+        "url": "/images/categories/icon-drinks.png",
+        "alt": "Напитки"
+      }
+    },
+    {
+      "id": 5,
+      "link": {
+        "label": "Растения",
+        "to": "plants"
+      },
+      "icon": {
+        "url": "/images/categories/icon-plants.png",
+        "alt": "Растения"
+      }
+    },
+    {
+      "id": 6,
+      "link": {
+        "label": "Миксы",
+        "to": "mixes"
+      },
+      "icon": {
+        "url": "/images/categories/icon-mixes.png",
+        "alt": "Миксы"
+      }
+    }
+  ]
+}

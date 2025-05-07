@@ -1,0 +1,66 @@
+{
+  "seo": {
+    "meta": {
+      "title": "О продукте",
+      "ogTitle": "О продукте",
+      "description": "Это описание для страницы О продукте",
+      "ogDescription": "Это описание для страницы О продукте",
+      "ogImage": "/images/zland.jpg",
+      "twitterCard": "summary_large_image",
+      "robots": "noindex"
+    },
+    "H1": "Zland Mini",
+    "content": null
+  },
+
+  "schemaOrg": [],
+  "aboutBanner": {
+    "description": "Твой персональный мир вейпинга,<br> где ты сам задаёшь правила игры",
+    "image": {
+      "url": "/images/about/about-home.png",
+      "alt": "Zland Mini"
+    }
+  },
+  "aboutInfo": {
+    "title": "Не просто девайс",
+    "description": "<p>Элегантный дизайн, регулируемая мощность и самое главное - возможность смешивать картриджи Z-Сolors Mini.</p><p>Вместе Zland Mini и Z–Colors Mini образуют инновационную POD-систему для тех, кто ценит качество и индивидуальность.</p>"
+  },
+  "aboutCards": [
+    {
+      "id": 1,
+      "label": "7000+",
+      "description": "<p>Различных вкусовых вариаций</p>",
+      "image": {
+        "url": "/images/about/about-1.png",
+        "alt": "alt"
+      }
+    },
+    {
+      "id": 2,
+      "label": "LED - дисплей",
+      "description": "<p>Отображает заряд батареи</p>",
+      "image": {
+        "url": "/images/about/about-2.png",
+        "alt": "alt"
+      }
+    },
+    {
+      "id": 3,
+      "label": "Режимы Boost & Soft",
+      "description": "<p>Переключайтесь между режимами<br> с помощью нижней кнопки</p>",
+      "image": {
+        "url": "/images/about/about-3.png",
+        "alt": "alt"
+      }
+    },
+    {
+      "id": 4,
+      "label": "Быстрая зарядка",
+      "description": "<p>Меньше времени на подзарядку,<br> больше — на использование</p>",
+      "image": {
+        "url": "/images/about/about-4.png",
+        "alt": "alt"
+      }
+    }
+  ]
+}

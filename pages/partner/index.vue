@@ -1,28 +1,35 @@
 <script lang="ts" setup>
-import { vMaska } from 'maska/vue'
+import {vMaska} from 'maska/vue'
 import * as Yup from 'yup'
+import type {FormPartner} from '~/types/FormPartner'
+import type {Notification} from '~/types/Notification'
+
+const { data, error } = await useFetch<any>('/api/partner/')
+
+if (error.value) {
+  throw createError({
+    statusCode: error.value.statusCode,
+    statusMessage: error.value.statusMessage,
+    fatal: true,
+  })
+}
 
 definePageMeta({
   layout: 'dark',
 })
-useHead({
-  title: 'Партнёрство',
-})
 
-interface FormData {
-  name: string
-  tel: string
-  email: string
-  telegram: string
-  comment: string
-}
-
-const form = reactive<FormData>({
+const form = reactive<FormPartner>({
   name: '',
   tel: '',
   email: '',
   telegram: '',
   comment: '',
+})
+
+const notification = ref<Notification>({
+  show: false,
+  status: false,
+  text: '',
 })
 
 const schema = Yup.object().shape({
@@ -38,9 +45,35 @@ const schema = Yup.object().shape({
 
 const isLoading = ref<boolean>(false)
 
-const handleSubmit = (values: any) => {
+const handleSubmit = async (_values: any, actions: any) => {
   isLoading.value = true
-  console.log('Значения формы:', values)
+
+  try {
+    await $fetch<Response>(`/api/partner/`, {
+      method: 'POST',
+      body: {
+        ...form,
+      },
+    })
+    notification.value.status = true
+    notification.value.text = 'Заявка успешно отправлена'
+    notification.value.show = true
+
+    actions.resetForm()
+  } catch (error: any) {
+    if (error.statusCode === 422) {
+      actions.setErrors(error.data.data.errors)
+    } else {
+      notification.value.status = false
+      notification.value.text = 'Произошла ошибка, попробуте заново'
+      notification.value.show = true
+    }
+  } finally {
+    setTimeout(() => {
+      notification.value.show = false
+    }, 10000)
+    isLoading.value = false
+  }
 }
 </script>
 
@@ -48,24 +81,18 @@ const handleSubmit = (values: any) => {
   <section class="partner">
     <div class="container">
       <div class="partner__head">
-        <h1 class="partner__title">Партнёрство</h1>
-        <div class="partner__head-description p1">
-          <p>
-            Мы открыты к сотрудничеству с магазинами, блогерами и организаторами
-            мероприятий.
-          </p>
-          <p>
-            Предлагаем выгодные условия, поддержку и эксклюзивные предложения
-            для наших партнёров.
-          </p>
-        </div>
+        <h1 class="partner__title typo-h1">{{ data.seo.H1 }}</h1>
+        <div
+          class="partner__head-description typo-p1"
+          v-html="data.headPartner.description"
+        />
       </div>
       <div class="partner__frame frame">
         <div class="partner__form">
           <div class="partner__form-info">
-            <h2 class="partner__subtitle">Обсудим детали?</h2>
-            <p class="partner__description p1">
-              Оставьте заявку, и мы свяжемся с вами в течение часа
+            <h2 class="partner__subtitle typo-h2">Обсудим детали?</h2>
+            <p class="partner__description typo-p1">
+              Оставьте заявку, и мы свяжемся с вами в течение часа
             </p>
           </div>
           <Form class="form" :validation-schema="schema" @submit="handleSubmit">
@@ -74,16 +101,19 @@ const handleSubmit = (values: any) => {
                 v-slot="{ field, meta, errorMessage }"
                 v-model="form.name"
                 name="name"
-                validate-on-input
               >
                 <div class="input" :class="{ disabled: isLoading }">
                   <div class="input__inner">
                     <input
+                      v-model.trim="form.name"
+                      v-maska
+                      data-maska="A"
+                      data-maska-tokens="A:[A-Za-zА-Яа-яЁё -]:multiple"
                       v-bind="field"
                       type="text"
-                      name="date"
+                      name="name"
                       autocomplete="name"
-                      placeholder=""
+                      placeholder="Имя"
                       :class="{
                         error: meta.validated && !meta.valid,
                       }"
@@ -100,7 +130,6 @@ const handleSubmit = (values: any) => {
                 v-slot="{ field, meta, errorMessage }"
                 v-model="form.tel"
                 name="tel"
-                validate-on-input
               >
                 <div class="input" :class="{ disabled: isLoading }">
                   <div class="input__inner">
@@ -110,7 +139,7 @@ const handleSubmit = (values: any) => {
                       type="tel"
                       name="tel"
                       autocomplete="tel"
-                      placeholder=""
+                      placeholder="Телефон"
                       :class="{
                         error: meta.validated && !meta.valid,
                       }"
@@ -127,7 +156,6 @@ const handleSubmit = (values: any) => {
                 v-slot="{ field, meta, errorMessage }"
                 v-model="form.email"
                 name="email"
-                validate-on-input
               >
                 <div class="input" :class="{ disabled: isLoading }">
                   <div class="input__inner">
@@ -136,7 +164,7 @@ const handleSubmit = (values: any) => {
                       type="email"
                       name="email"
                       autocomplete="email"
-                      placeholder=""
+                      placeholder="Email"
                       :class="{
                         error: meta.validated && !meta.valid,
                       }"
@@ -153,7 +181,6 @@ const handleSubmit = (values: any) => {
                 v-slot="{ field, meta, errorMessage }"
                 v-model="form.telegram"
                 name="telegram"
-                validate-on-input
               >
                 <div class="input" :class="{ disabled: isLoading }">
                   <div class="input__inner">
@@ -161,7 +188,7 @@ const handleSubmit = (values: any) => {
                       v-bind="field"
                       type="text"
                       name="telegram"
-                      placeholder=""
+                      placeholder="Telegram ник"
                       :class="{
                         error: meta.validated && !meta.valid,
                       }"
@@ -178,14 +205,13 @@ const handleSubmit = (values: any) => {
                 v-slot="{ field, meta, errorMessage }"
                 v-model="form.comment"
                 name="comment"
-                validate-on-input
               >
                 <div class="input" :class="{ disabled: isLoading }">
                   <div class="input__inner">
                     <textarea
                       v-bind="field"
                       name="comment"
-                      placeholder=""
+                      placeholder="Расскажите о себе"
                       :class="{
                         error: meta.validated && !meta.valid,
                       }"
@@ -206,13 +232,11 @@ const handleSubmit = (values: any) => {
         </div>
       </div>
     </div>
+    <AppNotification :notification />
   </section>
 </template>
 
 <style lang="scss" scoped>
-@use '../../assets/scss/abstracts/mixins' as *;
-@use '../../assets/scss/general/variables' as *;
-
 .partner {
   padding: val(16, 80) 0;
 
@@ -267,15 +291,9 @@ const handleSubmit = (values: any) => {
     }
   }
 
-  &__form-info {
-  }
-
   &__description {
     margin-top: 12px;
     color: $color-neutral-300;
-  }
-
-  &__subtitle {
   }
 }
 </style>
