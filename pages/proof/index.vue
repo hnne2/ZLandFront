@@ -88,7 +88,7 @@ const handleSubmit = (values: any) => {
 </script>
 
 <template>
-  <div class="proof">
+  <section class="proof">
     <div class="container">
       <div class="proof__frame frame">
         <div class="proof__head">
@@ -150,7 +150,7 @@ const handleSubmit = (values: any) => {
         </p>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <style lang="scss" scoped>

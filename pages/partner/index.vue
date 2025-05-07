@@ -45,7 +45,7 @@ const handleSubmit = (values: any) => {
 </script>
 
 <template>
-  <div class="partner">
+  <section class="partner">
     <div class="container">
       <div class="partner__head">
         <h1 class="partner__title">Партнёрство</h1>
@@ -206,7 +206,7 @@ const handleSubmit = (values: any) => {
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <style lang="scss" scoped>
