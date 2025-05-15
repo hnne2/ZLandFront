@@ -12,7 +12,7 @@ defineProps<Props>()
   <NuxtLink class="category-card" :to="`${'/catalog/' + category.link.to}`">
     <img
       class="category-card__img"
-      :src="category.icon.url"
+      :src="`http://localhost:8080/api/images${category.icon.url}`"
       :alt="category.icon.alt"
     />
     <h2 class="category-card__name typo-h3">{{ category.link.label }}</h2>

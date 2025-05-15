@@ -9,7 +9,7 @@ defineProps<{
 <template>
   <div class="product-card">
     <div class="product-card__img">
-      <img :src="product.image.url" :alt="product.image.alt" />
+      <img :src="`http://localhost:8080/api/images${product.image.url}`" :alt="product.image.alt" />
       <span v-if="product.isTop" class="product-card__label">топ-15</span>
     </div>
     <h2 class="product-card__title typo-h3">{{ product.label }}</h2>

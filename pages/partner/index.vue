@@ -3,6 +3,7 @@ import {vMaska} from 'maska/vue'
 import * as Yup from 'yup'
 import type {FormPartner} from '~/types/FormPartner'
 import type {Notification} from '~/types/Notification'
+const token = useCookie('auth_token')?.value
 
 const { data, error } = await useFetch<any>('/api/partner/')
 
@@ -49,8 +50,9 @@ const handleSubmit = async (_values: any, actions: any) => {
   isLoading.value = true
 
   try {
-    await $fetch<Response>(`/api/partner/`, {
+    await $fetch<Response>(`http://localhost:8080/api/partners`, {
       method: 'POST',
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
       body: {
         ...form,
       },

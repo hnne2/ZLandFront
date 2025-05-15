@@ -1,8 +1,11 @@
 <script lang="ts" setup>
 const slug = useRoute().params.slug as string
 
-const { data, error } = await useFetch<any>(`/api/catalog/${slug}/`)
+const token = useCookie('auth_token')?.value
 
+const { data, error } = await useFetch<any>(`http://localhost:8080/api/vapes/categories/${slug}`, {
+  headers: token ? { Authorization: `Bearer ${token}` } : {}
+})
 if (error.value) {
   throw createError({
     statusCode: error.value.statusCode,

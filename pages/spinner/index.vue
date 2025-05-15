@@ -1,6 +1,17 @@
 <script lang="ts" setup>
-const { data, error } = await useFetch<any>('/api/spinner/')
 
+const token = useCookie('auth_token')?.value
+
+const { data, error } = await useFetch<any>(`http://localhost:8080/api/raffle-settings`, {
+  headers: token ? { Authorization: `Bearer ${token}` } : {}
+})
+import { ref } from 'vue';
+interface SpinUpdateResponse {
+  success: boolean;
+  isEnded: boolean;
+  countSpins?: number;
+  message?: string;
+}
 if (error.value) {
   throw createError({
     statusCode: error.value.statusCode,
@@ -15,10 +26,10 @@ definePageMeta({
 
 const chanceToWin: number = data.value.spinner.chanceToWin // шанс например 0.1 (10%)
 const maxSpins: number = data.value.spinner.maxSpins // максимальное количество спинов
-const countSpins = ref<number>(19)
+const countSpins = ref<number>(0)
 const isWin = ref<boolean>(false)
 const addClassWin = ref<boolean>(false)
-const isEnded = ref<boolean>(false)
+const isEnded = ref<boolean>(data.value.isEnded || false);
 const changeState = ref<boolean>(false)
 const isSpin = ref<boolean>(false)
 const showNoMatch = ref<boolean>(false)
@@ -48,73 +59,94 @@ const generateIcons = () => {
   return [...base, ...base.slice(0, 3)]
 }
 
-onMounted(() => {
+onMounted(async () => {
   columns.value = columns.value.map(() => generateIcons())
+
 })
 
-const launchSpin = () => {
-  if (countSpins.value >= maxSpins || isSpin.value) return
+const launchSpin = async () => {
+  if (countSpins.value >= maxSpins || isSpin.value || isEnded.value) return;
 
   if (audioSlotRef.value) {
-    audioSlotRef.value.currentTime = 0
-    audioSlotRef.value.play()
+    audioSlotRef.value.currentTime = 0;
+    audioSlotRef.value.play();
   }
 
-  isSpin.value = true
-  showNoMatch.value = false
-  countSpins.value++
+  isSpin.value = true;
+  showNoMatch.value = false;
+  countSpins.value++;
 
-  isWin.value = Math.random() < chanceToWin
+  isWin.value = Math.random() < chanceToWin;
 
-  let middleIcons: string[] = []
+  let middleIcons: string[] = [];
 
   if (isWin.value) {
-    const winIcon = icons[Math.floor(Math.random() * icons.length)]
-    middleIcons = Array(3).fill(winIcon)
+    const winIcon = icons[Math.floor(Math.random() * icons.length)];
+    middleIcons = Array(3).fill(winIcon);
   } else {
     do {
       middleIcons = Array.from(
-        { length: 3 },
-        () => icons[Math.floor(Math.random() * icons.length)]
-      )
-    } while (middleIcons.every((icon) => icon === middleIcons[0]))
+          { length: 3 },
+          () => icons[Math.floor(Math.random() * icons.length)]
+      );
+    } while (middleIcons.every((icon) => icon === middleIcons[0]));
   }
 
   setTimeout(() => {
     columns.value = columns.value.map((col, i) => {
-      const updated = [...col]
-      // Обновляем первые 3
-      updated[0] = icons[Math.floor(Math.random() * icons.length)]
-      updated[1] = middleIcons[i]
-      updated[2] = icons[Math.floor(Math.random() * icons.length)]
-      // Дублируем первые 3 в конец (зацикливание)
-      updated[updated.length - 3] = updated[0]
-      updated[updated.length - 2] = updated[1]
-      updated[updated.length - 1] = updated[2]
-      return updated
-    })
-  }, 2000)
+      const updated = [...col];
+      updated[0] = icons[Math.floor(Math.random() * icons.length)];
+      updated[1] = middleIcons[i];
+      updated[2] = icons[Math.floor(Math.random() * icons.length)];
+      updated[updated.length - 3] = updated[0];
+      updated[updated.length - 2] = updated[1];
+      updated[updated.length - 1] = updated[2];
+      return updated;
+    });
+  }, 2000);
 
-  setTimeout(() => {
+  setTimeout(async () => {
     if (isWin.value) {
       if (audioPulseRef.value) {
-        audioPulseRef.value.currentTime = 0
-        audioPulseRef.value.play()
+        audioPulseRef.value.currentTime = 0;
+        audioPulseRef.value.play();
       }
-      addClassWin.value = true
+      addClassWin.value = true;
       setTimeout(() => {
-        changeState.value = true
+        changeState.value = true;
         if (audioFanfareRef.value) {
-          audioFanfareRef.value.currentTime = 0
-          audioFanfareRef.value.play()
+          audioFanfareRef.value.currentTime = 0;
+          audioFanfareRef.value.play();
         }
-      }, 1800)
+      }, 1800);
     } else {
-      isSpin.value = false
-      showNoMatch.value = true
+      isSpin.value = false;
+      showNoMatch.value = true;
     }
-  }, 4000)
-}
+
+    // Отправка запроса на сервер для обновления количества спинов
+    try {
+      const { data, error } = await useFetch('http://localhost:8080/api/raffle-settings/update-spins', {
+        method: 'POST',
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        body: {
+          countSpins: maxSpins - countSpins.value,
+          isWin: isWin.value,
+        },
+      });
+
+      if (error.value) {
+        console.error('Ошибка при обновлении спинов:', error.value);
+      } else {
+        if (data.value?.isEnded !== undefined) {
+          isEnded.value = data.value.isEnded;
+        }
+      }
+    } catch (err) {
+
+    }
+  }, 4000);
+};
 
 const launchSpinAgain = () => {
   isSpin.value = false
