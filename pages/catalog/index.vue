@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const token = useCookie('auth_token')?.value
 
-const { data, error } = await useFetch<any>('http://localhost:8080/api/vapes/categories', {
+const { data, error } = await useFetch<any>('http://localhost:8081/api/vapes/categories', {
   headers: token ? { Authorization: `Bearer ${token}` } : {}
 })
 if (error.value) {

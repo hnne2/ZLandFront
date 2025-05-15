@@ -50,7 +50,7 @@ const handleSubmit = async (_values: any, actions: any) => {
   isLoading.value = true
 
   try {
-    await $fetch<Response>(`http://localhost:8080/api/partners`, {
+    await $fetch<Response>(`http://localhost:8081/api/partners`, {
       method: 'POST',
       headers: token ? { Authorization: `Bearer ${token}` } : {},
       body: {
