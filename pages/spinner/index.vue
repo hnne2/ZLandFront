@@ -1,17 +1,11 @@
 <script lang="ts" setup>
+import { ref } from 'vue';
 
 const token = useCookie('auth_token')?.value
 
 const { data, error } = await useFetch<any>(`http://localhost:8080/api/raffle-settings`, {
   headers: token ? { Authorization: `Bearer ${token}` } : {}
 })
-import { ref } from 'vue';
-interface SpinUpdateResponse {
-  success: boolean;
-  isEnded: boolean;
-  countSpins?: number;
-  message?: string;
-}
 if (error.value) {
   throw createError({
     statusCode: error.value.statusCode,
@@ -135,15 +129,13 @@ const launchSpin = async () => {
         },
       });
 
-      if (error.value) {
-        console.error('Ошибка при обновлении спинов:', error.value);
-      } else {
+      if (!error.value) {
         if (data.value?.isEnded !== undefined) {
           isEnded.value = data.value.isEnded;
         }
       }
-    } catch (err) {
-
+    } catch  {
+      // игнорируем ошибку
     }
   }, 4000);
 };
