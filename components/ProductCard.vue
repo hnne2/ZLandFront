@@ -4,12 +4,14 @@ import type { Product } from '~/types/Product'
 defineProps<{
   product: Product
 }>()
+const baseUrl = window.location.origin
+
 </script>
 
 <template>
   <div class="product-card">
     <div class="product-card__img">
-      <img :src="`http://localhost:8080/api/images${product.image.url}`" :alt="product.image.alt" />
+      <img :src="`${baseUrl}/apiZ/images${product.image.url}`" :alt="product.image.alt" />
       <span v-if="product.isTop" class="product-card__label">топ-15</span>
     </div>
     <h2 class="product-card__title typo-h3">{{ product.label }}</h2>

@@ -22,8 +22,10 @@
     "@vee-validate/zod": "^4.15.0",
     "gsap": "^3.13.0",
     "motion-v": "^1.0.1",
+    "node-fetch": "^3.3.2",
     "normalize.css": "^8.0.1",
     "nuxt": "^3.17.0",
+    "pinia": "^3.0.2",
     "vue": "latest",
     "vue-router": "latest",
     "yup": "^1.6.1"
@@ -39,6 +41,7 @@
     "husky": "^8.0.3",
     "lint-staged": "^15.5.1",
     "maska": "^3.1.1",
+    "nuxi": "^3.25.1",
     "nuxt-icons": "^3.2.1",
     "postcss-html": "^1.8.0",
     "prettier": "^3.5.3",
@@ -47,7 +50,7 @@
     "stylelint-config-standard-scss": "^14.0.0",
     "stylelint-prettier": "^5.0.3",
     "typescript": "^5.8.3",
-    "vite-plugin-checker": "^0.9.1"
+    "vite-plugin-checker": "^0.9.3"
   },
   "lint-staged": {
     "*.{js,ts,vue}": [

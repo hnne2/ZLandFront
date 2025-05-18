@@ -5,6 +5,8 @@ import type {FormPartner} from '~/types/FormPartner'
 import type {Notification} from '~/types/Notification'
 const token = useCookie('auth_token')?.value
 
+const baseUrl = window.location.origin
+
 const { data, error } = await useFetch<any>('/api/partner/')
 
 if (error.value) {
@@ -50,7 +52,7 @@ const handleSubmit = async (_values: any, actions: any) => {
   isLoading.value = true
 
   try {
-    await $fetch<Response>(`http://localhost:8081/api/partners`, {
+    await $fetch<Response>(`${baseUrl}/apiZ/partners`, {
       method: 'POST',
       headers: token ? { Authorization: `Bearer ${token}` } : {},
       body: {

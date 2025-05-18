@@ -3,9 +3,19 @@ import { ref } from 'vue';
 
 const token = useCookie('auth_token')?.value
 
-const { data, error } = await useFetch<any>(`http://localhost:8080/api/raffle-settings`, {
+const baseUrl = window.location.origin
+
+const { data, error } = await useFetch(`${baseUrl}/apiZ/raffle-settings`, {
   headers: token ? { Authorization: `Bearer ${token}` } : {}
 })
+
+if (!data.value || error.value) {
+  throw createError({
+    statusCode: error.value?.statusCode || 500,
+    statusMessage: error.value?.statusMessage || 'Ошибка загрузки данных',
+    fatal: true,
+  });
+}
 if (error.value) {
   throw createError({
     statusCode: error.value.statusCode,
@@ -120,14 +130,17 @@ const launchSpin = async () => {
 
     // Отправка запроса на сервер для обновления количества спинов
     try {
-      const { data, error } = await useFetch('http://localhost:8080/api/raffle-settings/update-spins', {
-        method: 'POST',
-        headers: token ? { Authorization: `Bearer ${token}` } : {},
-        body: {
-          countSpins: maxSpins - countSpins.value,
-          isWin: isWin.value,
-        },
-      });
+      const { data, error } = await useFetch(`${baseUrl}/apiZ/raffle-settings/update-spins`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  },
+  body: JSON.stringify({
+    countSpins: maxSpins - countSpins.value,
+    isWin: isWin.value,
+  }),
+});
 
       if (!error.value) {
         if (data.value?.isEnded !== undefined) {
@@ -210,9 +223,9 @@ const closeTab = () => {
             </div>
             <div v-else-if="changeState && !isEnded" key="win">
               <div class="spinner__img-prize">
-                <img :src="data.prize.image.url" :alt="data.prize.image.alt" />
+                <img :src="`${baseUrl}/apiZ/images/${data.prize.image.url}`" :alt="data.prize.image.alt" />
               </div>
-              <p class="spinner__title typo-h1">{{ data.prize.title }}</p>
+              <p class="spinner__title typo-h1" v-html="data.prize.title"></p>
               <p class="spinner__description typo-p1">
                 {{ data.prize.message }}
               </p>

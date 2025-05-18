@@ -90,10 +90,17 @@ const isLoading = ref<boolean>(false)
 
 const handleSubmit = () => {
   isLoading.value = true
+
   const adult = useCookie<string>('adult')
+  const redirectPath = useCookie<string>('redirectAfterProof')
+
   adult.value = 'adult'
+
+  const target = redirectPath.value || '/'
+  redirectPath.value = '' // очищаем, чтобы не было зацикливания
+
   setTimeout(() => {
-    navigateTo('/')
+    navigateTo(target)
   }, 1000)
 }
 </script>

@@ -1,6 +1,8 @@
-import checker from 'vite-plugin-checker'
+import { defineNuxtConfig } from 'nuxt/config';
+import checker from 'vite-plugin-checker'; // Добавляем импорт
 
 export default defineNuxtConfig({
+  ssr: false,
   compatibilityDate: '2024-11-01',
   devtools: { enabled: false },
 
@@ -8,7 +10,6 @@ export default defineNuxtConfig({
     port: 3000,
     host: '0.0.0.0',
   },
-
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
     head: {
@@ -45,6 +46,12 @@ export default defineNuxtConfig({
           href: '/site.webmanifest',
         },
       ],
+      script: [
+        {
+          src: 'https://telegram.org/js/telegram-web-app.js',
+          async: true,
+        },
+      ],
     },
   },
 
@@ -79,4 +86,4 @@ export default defineNuxtConfig({
       baseUrl: process.env.BASE_URL,
     },
   },
-})
+});

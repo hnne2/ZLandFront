@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 const token = useCookie('auth_token')?.value
+const baseUrl = window.location.origin
 
-const { data, error } = await useFetch<any>('http://localhost:8081/api/vapes/categories', {
+const { data, error } = await useFetch<any>(`${baseUrl}/apiZ/vapes/categories`, {
   headers: token ? { Authorization: `Bearer ${token}` } : {}
 })
 if (error.value) {
