@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {vMaska} from 'maska/vue'
+import { vMaska } from 'maska/vue'
 import * as Yup from 'yup'
 
 const { data, error } = await useFetch<any>('/api/proof/')
@@ -57,7 +57,7 @@ const schema = Yup.object().shape({
     .test('is-18+', 'Вам должно быть 18 лет или больше', (value) => {
       if (!value) return false
       const [day, month, year] = value.split('.').map(Number)
-      const birthDate = new Date(year, month - 1, day)
+      const birthDate = new Date(year, month - 1, day + 1)
       const today = new Date()
       const age = today.getFullYear() - birthDate.getFullYear()
       const m = today.getMonth() - birthDate.getMonth()
