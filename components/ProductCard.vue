@@ -4,32 +4,29 @@ import type { Product } from '~/types/Product'
 defineProps<{
   product: Product
 }>()
-const baseUrl = window.location.origin
-
 </script>
 
 <template>
   <div class="product-card">
     <div class="product-card__img">
-      <img :src="`${baseUrl}/apiZ/images${product.image.url}`" :alt="product.image.alt" />
+      <img :src="product.image.url" :alt="product.image.alt" />
       <span v-if="product.isTop" class="product-card__label">топ-15</span>
     </div>
     <h2 class="product-card__title typo-h3">{{ product.label }}</h2>
     <div class="product-card__parameters">
       <div
-        v-for="parameter in product.parameters"
-        :key="parameter.id"
-        class="product-card__parameters-item"
+          v-for="parameter in product.parameters"
+          :key="parameter.id"
+          class="product-card__parameters-item"
       >
         <div class="product-card__parameters-info typo-p3-medium">
           <span>{{ parameter.label }}</span>
           <span>{{ parameter.value }}</span>
         </div>
         <div
-          class="product-card__parameters-indicator"
-          :data-value="parameter.value"
+            class="product-card__parameters-indicator"
+            :data-value="parameter.value"
         >
-          <span></span>
           <span></span>
           <span></span>
         </div>
@@ -110,7 +107,7 @@ const baseUrl = window.location.origin
 
   &__parameters-indicator {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 4px;
 
     span {
@@ -133,7 +130,7 @@ const baseUrl = window.location.origin
     }
 
     &[data-value='0.5'] span:nth-child(1)::before {
-      width: 54%;
+      width: 52%;
     }
 
     &[data-value='1'] span:nth-child(1)::before {
@@ -146,7 +143,7 @@ const baseUrl = window.location.origin
       }
 
       span:nth-child(2)::before {
-        width: 54%;
+        width: 52%;
       }
     }
 
@@ -156,34 +153,6 @@ const baseUrl = window.location.origin
       }
 
       span:nth-child(2)::before {
-        width: 100%;
-      }
-    }
-
-    &[data-value='2.5'] {
-      span:nth-child(1)::before {
-        width: 100%;
-      }
-
-      span:nth-child(2)::before {
-        width: 100%;
-      }
-
-      span:nth-child(3)::before {
-        width: 54%;
-      }
-    }
-
-    &[data-value='3'] {
-      span:nth-child(1)::before {
-        width: 100%;
-      }
-
-      span:nth-child(2)::before {
-        width: 100%;
-      }
-
-      span:nth-child(3)::before {
         width: 100%;
       }
     }

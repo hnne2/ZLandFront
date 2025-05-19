@@ -31,7 +31,7 @@ definePageMeta({
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .home-screen {
   padding: val(24, 60);
 

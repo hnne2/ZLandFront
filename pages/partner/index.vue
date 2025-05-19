@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import {vMaska} from 'maska/vue'
+import { vMaska } from 'maska/vue'
 import * as Yup from 'yup'
-import type {FormPartner} from '~/types/FormPartner'
-import type {Notification} from '~/types/Notification'
+import type { FormPartner } from '~/types/FormPartner'
+import type { Notification } from '~/types/Notification'
 const token = useCookie('auth_token')?.value
 
 const baseUrl = window.location.origin
@@ -69,7 +69,7 @@ const handleSubmit = async (_values: any, actions: any) => {
       actions.setErrors(error.data.data.errors)
     } else {
       notification.value.status = false
-      notification.value.text = 'Произошла ошибка, попробуте заново'
+      notification.value.text = 'Произошла ошибка, попробуйте заново'
       notification.value.show = true
     }
   } finally {
