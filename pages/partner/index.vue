@@ -252,7 +252,6 @@ const handleSubmit = async (_values: any, actions: any) => {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    text-align: center;
   }
 
   &__head {

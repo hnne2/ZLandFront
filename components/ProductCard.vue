@@ -4,6 +4,7 @@ import type { Product } from '~/types/Product'
 defineProps<{
   product: Product
 }>()
+const baseUrl = window.location.origin
 </script>
 
 <template>
