@@ -213,15 +213,17 @@ const handleSubmit = async (_values: any, actions: any) => {
                 <div class="input" :class="{ disabled: isLoading }">
                   <div class="input__inner">
                     <textarea
-                      v-bind="field"
-                      name="comment"
-                      placeholder="Расскажите о себе"
-                      :class="{
+                        v-bind="field"
+                        name="comment"
+                        placeholder="Расскажите о себе"
+                        :class="{
                         error: meta.validated && !meta.valid,
                       }"
-                      :disabled="isLoading"
+                        :disabled="isLoading"
                     ></textarea>
-                    <label class="input__label">Расскажите о себе</label>
+                    <label class="input__label"
+                    >Расскажите про вас — город, количество магазинов</label
+                    >
                   </div>
                   <FormMessage v-if="errorMessage">
                     {{ errorMessage }}
@@ -291,7 +293,7 @@ const handleSubmit = async (_values: any, actions: any) => {
     flex-direction: column;
     gap: 32px;
     textarea {
-      height: 160px;
+      height: 240px;
     }
   }
 
