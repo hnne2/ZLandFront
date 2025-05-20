@@ -26,7 +26,7 @@ const baseUrl = window.location.origin
         </div>
         <div
             class="product-card__parameters-indicator"
-            :data-value="parameter.value"
+            :data-value="parameter.value.toString()"
         >
           <span></span>
           <span></span>
@@ -92,11 +92,11 @@ const baseUrl = window.location.origin
     }
 
     &:nth-child(2) .product-card__parameters-indicator span::before {
-      background-color: $color-green;
+      background-color: $color-blue;
     }
 
     &:nth-child(3) .product-card__parameters-indicator span::before {
-      background-color: $color-blue;
+      background-color: $color-green;
     }
   }
 
