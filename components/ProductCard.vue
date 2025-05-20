@@ -26,7 +26,7 @@ const baseUrl = window.location.origin
         </div>
         <div
             class="product-card__parameters-indicator"
-            :data-value="parameter.value.toString()"
+            :data-value="Number(parameter.value).toString()"
         >
           <span></span>
           <span></span>
