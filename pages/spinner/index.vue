@@ -153,16 +153,6 @@ const launchSpin = async () => {
   }, 4000);
 };
 
-const launchSpinAgain = () => {
-  isSpin.value = false
-  changeState.value = false
-  isWin.value = false
-  addClassWin.value = false
-  setTimeout(() => {
-    launchSpin()
-  }, 500)
-}
-
 const closeTab = () => {
   window.close()
 	navigateTo('/')
@@ -182,8 +172,9 @@ const closeTab = () => {
             <div v-if="!changeState && !isEnded" key="start">
               <p class="spinner__title typo-h1">Испытайте свою удачу</p>
               <p class="spinner__description typo-p1">
-                Соберите три одинаковых слота и получите приз! Крутите каждый
-                день и увеличьте свои шансы на выигрыш
+                Соберите три одинаковых слота <br />
+                и получите приз! Крутите каждый день <br />
+                и увеличьте свои шансы на выигрыш
               </p>
               <div class="slots">
                 <div
@@ -249,29 +240,21 @@ const closeTab = () => {
                 <span v-else>Вращения кончились. Приходите завтра</span>
               </div>
               <button
-                :disabled="countSpins >= maxSpins || isSpin"
-                class="spinner__btn btn btn--light"
-                @click="launchSpin"
+                  :disabled="countSpins >= maxSpins || isSpin"
+                  class="spinner__btn btn btn--light"
+                  @click="launchSpin"
               >
                 Крутить
               </button>
             </div>
             <div v-else-if="changeState && !isEnded">
-              <button
-                v-if="countSpins < maxSpins"
-                :disabled="countSpins >= maxSpins"
-                class="spinner__btn btn btn--light"
-                @click="launchSpinAgain"
-              >
-                Супер! Крутить еще
-              </button>
-              <div v-else>
-                <div class="spinner__counter">
-                  <NuxtIcon name="icon-warning" />
-                  <span>Вращения кончились. Приходите завтра</span>
-                </div>
-                <button class="spinner__btn btn btn--light" @click="closeTab">Закрыть</button>
+              <div v-if="countSpins === maxSpins" class="spinner__counter">
+                <NuxtIcon name="icon-warning" />
+                <span>Вращения кончились. Приходите завтра</span>
               </div>
+              <button class="spinner__btn btn btn--light" @click="closeTab">
+                Закрыть
+              </button>
             </div>
             <div v-else>
               <button class="spinner__btn btn btn--light" @click="closeTab">
@@ -338,6 +321,11 @@ const closeTab = () => {
 
   &__description {
     color: $color-neutral-300;
+    @media (min-width: $sm) {
+      br {
+        display: none;
+      }
+    }
   }
 
   &__img-prize {

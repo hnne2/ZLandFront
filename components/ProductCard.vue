@@ -30,6 +30,9 @@ const baseUrl = window.location.origin
         >
           <span></span>
           <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
       </div>
     </div>
@@ -37,6 +40,29 @@ const baseUrl = window.location.origin
 </template>
 
 <style lang="scss" scoped>
+@use 'sass:math';
+@mixin fill-progress($value, $max-bars: 5, $max-value: 5) {
+  $bar-value: calc($max-value / $max-bars);
+  // Количество полностью заполненных делений
+  $full-bars: math.floor(calc($value / $bar-value));
+  // Процент заполнения следующего деления
+  $partial-fill: (calc((math.max($value % $bar-value)) / $bar-value)) * 100%;
+
+  // Заполняем полные деления
+  @for $i from 1 through $full-bars {
+    span:nth-child(#{$i})::before {
+      width: 100%;
+    }
+  }
+
+  // Заполняем частично заполненное деление, если есть остаток
+  @if $partial-fill > 0 and $full-bars < $max-bars {
+    span:nth-child(#{$full-bars + 1})::before {
+      width: $partial-fill;
+    }
+  }
+}
+
 .product-card {
   display: flex;
   flex-direction: column;
@@ -108,7 +134,7 @@ const baseUrl = window.location.origin
 
   &__parameters-indicator {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 4px;
 
     span {
@@ -130,31 +156,10 @@ const baseUrl = window.location.origin
       }
     }
 
-    &[data-value='0.5'] span:nth-child(1)::before {
-      width: 52%;
-    }
-
-    &[data-value='1'] span:nth-child(1)::before {
-      width: 100%;
-    }
-
-    &[data-value='1.5'] {
-      span:nth-child(1)::before {
-        width: 100%;
-      }
-
-      span:nth-child(2)::before {
-        width: 52%;
-      }
-    }
-
-    &[data-value='2'] {
-      span:nth-child(1)::before {
-        width: 100%;
-      }
-
-      span:nth-child(2)::before {
-        width: 100%;
+    @for $i from 0 through 50 {
+      $value: $i * 0.1; // Значение от 0 до 5 с шагом 0.1
+      &[data-value='#{$value}'] {
+        @include fill-progress($value);
       }
     }
   }
