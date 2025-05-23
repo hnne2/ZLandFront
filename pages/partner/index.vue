@@ -20,6 +20,7 @@ if (error.value) {
 definePageMeta({
   layout: 'dark',
 })
+const now = Date.now()
 
 const form = reactive<FormPartner>({
   name: '',
