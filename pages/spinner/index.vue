@@ -71,6 +71,7 @@ onMounted(async () => {
 const launchSpin = async () => {
   if (countSpins.value >= maxSpins || isSpin.value || isEnded.value) return;
 
+  // Воспроизведение звука вращения
   if (audioSlotRef.value) {
     audioSlotRef.value.currentTime = 0;
     audioSlotRef.value.play();
@@ -80,6 +81,7 @@ const launchSpin = async () => {
   showNoMatch.value = false;
   countSpins.value++;
 
+  // Вычисляем победу
   isWin.value = Math.random() < chanceToWin;
 
   let middleIcons: string[] = [];
@@ -96,6 +98,7 @@ const launchSpin = async () => {
     } while (middleIcons.every((icon) => icon === middleIcons[0]));
   }
 
+  // Обновление слотов через 2 секунды
   setTimeout(() => {
     columns.value = columns.value.map((col, i) => {
       const updated = [...col];
@@ -109,7 +112,7 @@ const launchSpin = async () => {
     });
   }, 2000);
 
-  // В функции launchSpin, обновляем setTimeout для обработки выигрыша
+  // Обработка результата через 4 секунды
   setTimeout(async () => {
     if (isWin.value) {
       if (audioPulseRef.value) {
@@ -117,6 +120,7 @@ const launchSpin = async () => {
         audioPulseRef.value.play();
       }
       addClassWin.value = true;
+
       setTimeout(() => {
         changeState.value = true;
         if (audioFanfareRef.value) {
@@ -129,7 +133,7 @@ const launchSpin = async () => {
       showNoMatch.value = true;
     }
 
-    // Отправка запроса на сервер для обновления количества спинов
+    // Запрос на сервер для обновления количества спинов
     try {
       const { data, error } = await useFetch(`${baseUrl}/apiZ/raffle-settings/update-spins`, {
         method: 'POST',
@@ -144,24 +148,17 @@ const launchSpin = async () => {
       });
 
       if (!error.value && data.value?.isEnded !== undefined) {
-        // Не устанавливаем isEnded.value сразу, если это выигрыш
-        if (!isWin.value) {
-          isEnded.value = data.value.isEnded;
-        }
+        isEnded.value = data.value.isEnded;
       }
     } catch {
-      // Игнорируем ошибку
+      // Ошибка игнорируется
     }
   }, 4000);
+};
 
-// Обновляем функцию closeTab
-  const closeTab = () => {
-    if (isWin.value && data.value?.isEnded) {
-      isEnded.value = true; // Устанавливаем isEnded только после закрытия окна победы
-    }
-    window.close();
-    navigateTo('/');
-  };
+const closeTab = () => {
+  window.close()
+	navigateTo('/')
 }
 </script>
 
