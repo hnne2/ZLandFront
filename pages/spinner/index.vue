@@ -71,7 +71,6 @@ onMounted(async () => {
 const launchSpin = async () => {
   if (countSpins.value >= maxSpins || isSpin.value || isEnded.value) return;
 
-  // Воспроизведение звука вращения
   if (audioSlotRef.value) {
     audioSlotRef.value.currentTime = 0;
     audioSlotRef.value.play();
@@ -81,7 +80,6 @@ const launchSpin = async () => {
   showNoMatch.value = false;
   countSpins.value++;
 
-  // Вычисляем победу
   isWin.value = Math.random() < chanceToWin;
 
   let middleIcons: string[] = [];
@@ -98,7 +96,6 @@ const launchSpin = async () => {
     } while (middleIcons.every((icon) => icon === middleIcons[0]));
   }
 
-  // Обновление слотов через 2 секунды
   setTimeout(() => {
     columns.value = columns.value.map((col, i) => {
       const updated = [...col];
@@ -112,7 +109,6 @@ const launchSpin = async () => {
     });
   }, 2000);
 
-  // Обработка результата через 4 секунды
   setTimeout(async () => {
     if (isWin.value) {
       if (audioPulseRef.value) {
@@ -120,62 +116,39 @@ const launchSpin = async () => {
         audioPulseRef.value.play();
       }
       addClassWin.value = true;
-
-      setTimeout(async () => {
+      setTimeout(() => {
         changeState.value = true;
-
         if (audioFanfareRef.value) {
           audioFanfareRef.value.currentTime = 0;
           audioFanfareRef.value.play();
         }
-
-        // Только здесь делаем запрос на сервер
-        try {
-          const { data, error } = await useFetch(`${baseUrl}/apiZ/raffle-settings/update-spins`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              ...(token ? { Authorization: `Bearer ${token}` } : {}),
-            },
-            body: JSON.stringify({
-              countSpins: maxSpins - countSpins.value,
-              isWin: isWin.value,
-            }),
-          });
-
-          if (!error.value && data.value?.isEnded !== undefined) {
-            isEnded.value = data.value.isEnded;
-          }
-        } catch {
-          // игнорируем
-        }
-
-      }, 7800); // конец анимации выигрыша
-
+      }, 1800);
     } else {
       isSpin.value = false;
       showNoMatch.value = true;
+    }
 
-      // запрос при проигрыше
-      try {
-        const { data, error } = await useFetch(`${baseUrl}/apiZ/raffle-settings/update-spins`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            ...(token ? { Authorization: `Bearer ${token}` } : {}),
-          },
-          body: JSON.stringify({
-            countSpins: maxSpins - countSpins.value,
-            isWin: isWin.value,
-          }),
-        });
+    // Отправка запроса на сервер для обновления количества спинов
+    try {
+      const { data, error } = await useFetch(`${baseUrl}/apiZ/raffle-settings/update-spins`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  },
+  body: JSON.stringify({
+    countSpins: maxSpins - countSpins.value,
+    isWin: isWin.value,
+  }),
+});
 
-        if (!error.value && data.value?.isEnded !== undefined) {
+      if (!error.value && data.value?.isEnded !== undefined) {
+        if (!isWin.value) {
           isEnded.value = data.value.isEnded;
         }
-      } catch {
-        // игнорируем
       }
+    } catch  {
+      // игнорируем ошибку
     }
   }, 4000);
 };
