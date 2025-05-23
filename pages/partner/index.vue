@@ -27,6 +27,8 @@ const form = reactive<FormPartner>({
   email: '',
   telegram: '',
   comment: '',
+  createdAt: now,
+  updatedAt: now,
 })
 
 const notification = ref<Notification>({
@@ -50,6 +52,10 @@ const isLoading = ref<boolean>(false)
 
 const handleSubmit = async (_values: any, actions: any) => {
   isLoading.value = true
+
+  const now = Date.now()
+  form.createdAt = now
+  form.updatedAt = now
 
   try {
     await $fetch<Response>(`${baseUrl}/apiZ/partners`, {
@@ -79,6 +85,7 @@ const handleSubmit = async (_values: any, actions: any) => {
     isLoading.value = false
   }
 }
+
 </script>
 
 <template>
