@@ -121,37 +121,61 @@ const launchSpin = async () => {
       }
       addClassWin.value = true;
 
-      setTimeout(() => {
+      setTimeout(async () => {
         changeState.value = true;
+
         if (audioFanfareRef.value) {
           audioFanfareRef.value.currentTime = 0;
           audioFanfareRef.value.play();
         }
-      }, 1800);
+
+        // Только здесь делаем запрос на сервер
+        try {
+          const { data, error } = await useFetch(`${baseUrl}/apiZ/raffle-settings/update-spins`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            },
+            body: JSON.stringify({
+              countSpins: maxSpins - countSpins.value,
+              isWin: isWin.value,
+            }),
+          });
+
+          if (!error.value && data.value?.isEnded !== undefined) {
+            isEnded.value = data.value.isEnded;
+          }
+        } catch {
+          // игнорируем
+        }
+
+      }, 1800); // конец анимации выигрыша
+
     } else {
       isSpin.value = false;
       showNoMatch.value = true;
-    }
 
-    // Запрос на сервер для обновления количества спинов
-    try {
-      const { data, error } = await useFetch(`${baseUrl}/apiZ/raffle-settings/update-spins`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
-        body: JSON.stringify({
-          countSpins: maxSpins - countSpins.value,
-          isWin: isWin.value,
-        }),
-      });
+      // запрос при проигрыше
+      try {
+        const { data, error } = await useFetch(`${baseUrl}/apiZ/raffle-settings/update-spins`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token ? { Authorization: `Bearer ${token}` } : {}),
+          },
+          body: JSON.stringify({
+            countSpins: maxSpins - countSpins.value,
+            isWin: isWin.value,
+          }),
+        });
 
-      if (!error.value && data.value?.isEnded !== undefined) {
-        isEnded.value = data.value.isEnded;
+        if (!error.value && data.value?.isEnded !== undefined) {
+          isEnded.value = data.value.isEnded;
+        }
+      } catch {
+        // игнорируем
       }
-    } catch {
-      // Ошибка игнорируется
     }
   }, 4000);
 };
