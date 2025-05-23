@@ -109,6 +109,7 @@ const launchSpin = async () => {
     });
   }, 2000);
 
+  // В функции launchSpin, обновляем setTimeout для обработки выигрыша
   setTimeout(async () => {
     if (isWin.value) {
       if (audioPulseRef.value) {
@@ -131,32 +132,36 @@ const launchSpin = async () => {
     // Отправка запроса на сервер для обновления количества спинов
     try {
       const { data, error } = await useFetch(`${baseUrl}/apiZ/raffle-settings/update-spins`, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    ...(token ? { Authorization: `Bearer ${token}` } : {}),
-  },
-  body: JSON.stringify({
-    countSpins: maxSpins - countSpins.value,
-    isWin: isWin.value,
-  }),
-});
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+        body: JSON.stringify({
+          countSpins: maxSpins - countSpins.value,
+          isWin: isWin.value,
+        }),
+      });
 
-      if (!error.value) {
-        if (data.value?.isEnded !== undefined) {
+      if (!error.value && data.value?.isEnded !== undefined) {
+        // Не устанавливаем isEnded.value сразу, если это выигрыш
+        if (!isWin.value) {
           isEnded.value = data.value.isEnded;
         }
       }
-    } catch  {
-      // игнорируем ошибку
+    } catch {
+      // Игнорируем ошибку
     }
   }, 4000);
-};
 
-const closeTab = () => {
-  window.close()
-	navigateTo('/')
-}
+// Обновляем функцию closeTab
+  const closeTab = () => {
+    if (isWin.value && data.value?.isEnded) {
+      isEnded.value = true; // Устанавливаем isEnded только после закрытия окна победы
+    }
+    window.close();
+    navigateTo('/');
+  };
 </script>
 
 <template>
