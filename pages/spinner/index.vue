@@ -162,6 +162,7 @@ const launchSpin = async () => {
     window.close();
     navigateTo('/');
   };
+}
 </script>
 
 <template>
