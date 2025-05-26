@@ -117,11 +117,11 @@ const launchSpin = async () => {
       }
       addClassWin.value = true;
       setTimeout(() => {
-        changeState.value = true;
         if (audioFanfareRef.value) {
           audioFanfareRef.value.currentTime = 0;
           audioFanfareRef.value.play();
         }
+        changeState.value = true;
       }, 1800);
     } else {
       isSpin.value = false;
@@ -265,17 +265,17 @@ const closeTab = () => {
         <audio
           ref="audioSlotRef"
           class="visually-hidden"
-          src="/audio/slot.wav"
+          src="/audio/slot.mp3"
         ></audio>
         <audio
           ref="audioPulseRef"
           class="visually-hidden"
-          src="/audio/pulse.wav"
+          src="/audio/pulse.mp3"
         ></audio>
         <audio
           ref="audioFanfareRef"
           class="visually-hidden"
-          src="/audio/fanfare.wav"
+          src="/audio/fanfare.mp3"
         ></audio>
       </div>
     </div>
