@@ -155,7 +155,6 @@ const launchSpin = async () => {
 
 const closeTab = () => {
   window.close()
-	navigateTo('/')
 }
 </script>
 
