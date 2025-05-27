@@ -155,6 +155,9 @@ const launchSpin = async () => {
 
 const closeTab = () => {
   window.close()
+  if (window.Telegram && window.Telegram.WebApp) {
+    window.Telegram.WebApp.close();
+  }
 }
 </script>
 
