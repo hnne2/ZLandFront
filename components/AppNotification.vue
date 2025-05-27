@@ -40,6 +40,7 @@ defineProps<{
   gap: 8px;
   padding: 8px 12px;
   border-radius: 8px;
+  z-index: 5;
   :deep(.nuxt-icon svg) {
     width: 20px;
     height: 20px;
