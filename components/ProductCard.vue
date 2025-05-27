@@ -5,6 +5,11 @@ defineProps<{
   product: Product
 }>()
 const baseUrl = window.location.origin
+function formatValue(value: string | number): string {
+  const num = parseFloat(value.toString())
+  if (isNaN(num)) return value.toString()
+  return Number.isInteger(num) ? num.toString() : num.toFixed(1)
+}
 </script>
 
 <template>
@@ -22,12 +27,12 @@ const baseUrl = window.location.origin
       >
         <div class="product-card__parameters-info typo-p3-medium">
           <span>{{ parameter.label }}</span>
-          <span>{{ parameter.value }}</span>
+          <span>{{ formatValue(parameter.value) }}</span>
+
         </div>
         <div
             class="product-card__parameters-indicator"
-            :data-value="Number(parameter.value).toString()"
-        >
+            :data-value="isNaN(parseFloat(parameter.value)) ? '0' : parseFloat(parameter.value).toString()"        >
           <span></span>
           <span></span>
           <span></span>
@@ -43,22 +48,28 @@ const baseUrl = window.location.origin
 @use 'sass:math';
 @mixin fill-progress($value, $max-bars: 5, $max-value: 5) {
   $bar-value: calc($max-value / $max-bars);
-  // Количество полностью заполненных делений
-  $full-bars: math.floor(calc($value / $bar-value));
-  // Процент заполнения следующего деления
-  $partial-fill: (calc((math.max($value % $bar-value)) / $bar-value)) * 100%;
 
-  // Заполняем полные деления
-  @for $i from 1 through $full-bars {
-    span:nth-child(#{$i})::before {
-      width: 100%;
+  // Если значение равно 0, не заполняем ни одной полоски
+  @if $value == 0 {
+    // Все полоски остаются пустыми
+  } @else {
+    // Количество полностью заполненных делений
+    $full-bars: math.floor(calc($value / $bar-value));
+    // Процент заполнения следующего деления
+    $partial-fill: (calc((math.max($value % $bar-value)) / $bar-value)) * 100%;
+
+    // Заполняем полные деления
+    @for $i from 1 through $full-bars {
+      span:nth-child(#{$i})::before {
+        width: 100%;
+      }
     }
-  }
 
-  // Заполняем частично заполненное деление, если есть остаток
-  @if $partial-fill > 0 and $full-bars < $max-bars {
-    span:nth-child(#{$full-bars + 1})::before {
-      width: $partial-fill;
+    // Заполняем частично заполненное деление, если есть остаток
+    @if $partial-fill > 0 and $full-bars < $max-bars {
+      span:nth-child(#{$full-bars + 1})::before {
+        width: $partial-fill;
+      }
     }
   }
 }
