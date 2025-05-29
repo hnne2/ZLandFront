@@ -115,7 +115,6 @@ const handleSubmit = async () => {
     }
   } catch (error) {
     // eslint-disable-next-line no-console
-
     console.error('Ошибка при отправке подтверждения возраста:', error)
 
   } finally {
