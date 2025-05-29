@@ -88,21 +88,39 @@ const schema = Yup.object().shape({
 
 const isLoading = ref<boolean>(false)
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
   isLoading.value = true
 
-  const adult = useCookie<string>('adult')
-  const redirectPath = useCookie<string>('redirectAfterProof')
+  try {
+    const adult = useCookie<string>('adult')
+    const redirectPath = useCookie<string>('redirectAfterProof')
 
-  adult.value = 'adult'
+    const token = useCookie<string>('auth_token')?.value
+    const baseUrl = window.location.origin
 
-  const target = redirectPath.value || '/'
-  redirectPath.value = '' // очищаем, чтобы не было зацикливания
+    const response = await $fetch(`${baseUrl}/apiZ/auth/proof`, {
+      method: 'POST',
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    })
 
-  setTimeout(() => {
-    navigateTo(target)
-  }, 1000)
+    if (response.confirmed) {
+      adult.value = 'adult'
+
+      const target = redirectPath.value || '/'
+      redirectPath.value = '' // очищаем, чтобы не было зацикливания
+
+      navigateTo(target)
+    } else {
+      throw new Error('Не удалось подтвердить возраст')
+    }
+  } catch (error) {
+    console.error('Ошибка при отправке подтверждения возраста:', error)
+
+  } finally {
+    isLoading.value = false
+  }
 }
+
 </script>
 
 <template>
