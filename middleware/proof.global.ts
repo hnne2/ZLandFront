@@ -1,17 +1,34 @@
-export default defineNuxtRouteMiddleware((to) => {
+export default defineNuxtRouteMiddleware(async (to) => {
   const adult = useCookie<string>('adult')
   const redirectPath = useCookie<string>('redirectAfterProof')
 
-  // Если пользователь не подтвердил возраст и НЕ находится на '/proof/'
+  // Если куки нет — запрашиваем статус у API
+  if (!adult.value) {
+    const token = useCookie('auth_token')?.value
+    const baseUrl = window.location.origin
+
+    try {
+      const { data } = await useFetch<any>(`${baseUrl}/apiZ/auth/proof`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      })
+
+      if (data.value?.confirmed) {
+        adult.value = 'true' // Устанавливаем куку, чтобы не проверять каждый раз
+      }
+    } catch (err) {
+      console.error('Ошибка запроса на проверку возраста:', err)
+    }
+  }
+
+  // Проверка и редиректы как раньше
   if (!adult.value && to.path !== '/proof/') {
-    redirectPath.value = to.fullPath // сохранить путь, куда хотел попасть
+    redirectPath.value = to.fullPath
     return navigateTo('/proof/')
   }
 
-  // Если подтвердил возраст и пытается зайти на '/proof/' — вернуть его туда, куда он хотел
   if (adult.value && to.path === '/proof/') {
     const target = redirectPath.value || '/'
-    redirectPath.value = '' // очистить куку
+    redirectPath.value = ''
     return navigateTo(target)
   }
 })
