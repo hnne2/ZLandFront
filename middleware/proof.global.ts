@@ -16,6 +16,7 @@ export default defineNuxtRouteMiddleware(async (to) => {
         adult.value = 'true' // Устанавливаем куку, чтобы не проверять каждый раз
       }
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.error('Ошибка запроса на проверку возраста:', err)
     }
   }
